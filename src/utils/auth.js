@@ -10,15 +10,14 @@ export const authOptions = {
     GithubProvider({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
-      secret: "GOCSPX-b9zMKJxcp7",
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
-      secret: "GOCSPX-b9zMKJxcp7",
     }),
     // ...add more providers here
   ],
+  secret: process.env.SECRET,
 };
 
 export const getAuthSession = () => getServerSession(authOptions);
