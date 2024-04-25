@@ -6,7 +6,9 @@ import React from "react";
 import { URL } from "../../../../link";
 
 const gatData = async (slug) => {
-  const res = await fetch(`${URL}/api/posts/${slug}`);
+  const res = await fetch(`${URL}/api/posts/${slug}`, {
+    cache: "no-store",
+  });
   if (!res.ok) {
     throw new Error(`Couldn't get Post from ${slug}`);
   }
