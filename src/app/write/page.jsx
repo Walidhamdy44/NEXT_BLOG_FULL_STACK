@@ -11,12 +11,13 @@ import {
 } from "firebase/storage";
 import { app } from "@/utils/firebase";
 import "react-quill/dist/quill.snow.css";
-import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
+// import ReactQuill from "react-quill";
 
 // initialize app
 
 const WritePage = () => {
-  // const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+  const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
   const Router = useRouter();
   const { status } = useSession();
 
