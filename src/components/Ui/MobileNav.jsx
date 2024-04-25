@@ -33,8 +33,8 @@ const MobileNav = () => {
           </button>
           <div className="flex items-center gap-2 flex-col ">
             <Link href="/">Home</Link>
-            <Link href="/contact">Contact</Link>
-            <Link href="/about">About</Link>
+            <Link href="/blog">New Posts</Link>
+            <Link href="/404">404</Link>
             <AuthNav />
           </div>
         </div>

@@ -94,7 +94,7 @@ const WritePage = () => {
     }
   };
   return (
-    <div className="min-h-[500px] mt-[30px] write">
+    <div className="min-h-[500px] mt-[30px] write overflow-hidden">
       <div className="flex flex-col items-start gap-4">
         <input
           type="text"
