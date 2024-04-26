@@ -77,6 +77,11 @@ const WritePage = () => {
       .replace(/^-+|-+$/g, "");
 
   const handleSubmit = async () => {
+    if (title === "") {
+      alert("Title is required");
+      return;
+    }
+
     const res = await fetch("/api/posts", {
       method: "POST",
       body: JSON.stringify({
@@ -100,6 +105,7 @@ const WritePage = () => {
           type="text"
           placeholder="Title"
           onChange={(e) => setTitle(e.target.value)}
+          value={title}
         />
         <p className="text-[22px] mt-[10px]">Select One Category :</p>
         <select className="select" onChange={(e) => setCatSlug(e.target.value)}>
