@@ -61,7 +61,8 @@ const WritePage = () => {
         }
       );
     };
-    file && upload();
+    if(!value == ""){
+    file && upload();}
   }, [file]);
 
   if (status === "unauthenticated") {
@@ -77,7 +78,8 @@ const WritePage = () => {
       .replace(/^-+|-+$/g, "");
 
   const handleSubmit = async () => {
-    const res = await fetch("/api/posts", {
+    if (!title === ""){
+          const res = await fetch("/api/posts", {
       method: "POST",
       body: JSON.stringify({
         title,
@@ -87,6 +89,9 @@ const WritePage = () => {
         catSlug: catSlug || "style", //If not selected, choose the general category
       }),
     });
+
+    }
+
 
     if (res.status === 200) {
       const data = await res.json();
@@ -99,6 +104,7 @@ const WritePage = () => {
         <input
           type="text"
           placeholder="Title"
+          value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
         <p className="text-[22px] mt-[10px]">Select One Category :</p>
