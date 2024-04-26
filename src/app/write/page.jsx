@@ -72,7 +72,7 @@ const WritePage = () => {
     window.alert("Please enter a title.");
     return;
   }
-
+// NEW
     const res = await fetch("/api/posts", {
       method: "POST",
       body: JSON.stringify({
