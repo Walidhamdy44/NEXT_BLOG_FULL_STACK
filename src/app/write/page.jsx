@@ -61,8 +61,8 @@ const WritePage = () => {
         }
       );
     };
-    if(!value == ""){
-    file && upload();}
+    if(!value === "" || file){
+      upload();}
   }, [file]);
 
   if (status === "unauthenticated") {
@@ -77,27 +77,29 @@ const WritePage = () => {
       .replace(/[\s_-]+/g, "-")
       .replace(/^-+|-+$/g, "");
 
-  const handleSubmit = async () => {
-    if (!title === ""){
+      if(!title ===""){
+        const handleSubmit = async () => {
+  
           const res = await fetch("/api/posts", {
-      method: "POST",
-      body: JSON.stringify({
-        title,
-        desc: value,
-        img: imageLink,
-        slug: slugify(title),
-        catSlug: catSlug || "style", //If not selected, choose the general category
-      }),
-    });
-
-    }
-
-
-    if (res.status === 200) {
-      const data = await res.json();
-      Router.push(`/posts/${data.slug}`);
-    }
-  };
+          method: "POST",
+          body: JSON.stringify({
+            title,
+            desc: value,
+            img: imageLink,
+            slug: slugify(title),
+            catSlug: catSlug || "style", //If not selected, choose the general category
+          }),
+        });
+    
+        
+    
+    
+        if (res.status === 200) {
+          const data = await res.json();
+          Router.push(`/posts/${data.slug}`);
+        }
+      };
+      }
   return (
     <div className="min-h-[500px] mt-[30px] write overflow-hidden">
       <div className="flex flex-col items-start gap-4">
