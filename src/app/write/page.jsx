@@ -1,11 +1,20 @@
-"use client"
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+"use client";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import dynamic from "next/dynamic";
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 import { app } from "@/utils/firebase";
+import "react-quill/dist/quill.snow.css";
+import dynamic from "next/dynamic";
+// import ReactQuill from "react-quill";
+
+// initialize app
 
 const WritePage = () => {
   const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -20,41 +29,40 @@ const WritePage = () => {
   const [imageLink, setImageLink] = useState("");
 
   useEffect(() => {
-    if (file && title) { // Check if both title and file are provided
-      const storage = getStorage(app);
-      const upload = () => {
-        const uniqueName = new Date().getTime() + file.name;
-        const storageRef = ref(storage, uniqueName);
+    const storage = getStorage(app);
+    const upload = () => {
+      const uniqueName = new Date().getTime() + file.name;
+      const storageRef = ref(storage, uniqueName);
 
-        const uploadTask = uploadBytesResumable(storageRef, file);
+      const uploadTask = uploadBytesResumable(storageRef, file);
 
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log("Upload is " + progress + "% done");
-            switch (snapshot.state) {
-              case "paused":
-                console.log("Upload is paused");
-                break;
-              case "running":
-                console.log("Upload is running");
-                break;
-            }
-          },
-          (error) => {
-            // Handle unsuccessful uploads
-          },
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              setImageLink(downloadURL);
-            });
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
           }
-        );
-      };
-      upload();
-    }
-  }, [file, title]);
+        },
+        (error) => {
+          // Handle unsuccessful uploads
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setImageLink(downloadURL);
+          });
+        }
+      );
+    };
+    file && upload();
+  }, [file]);
 
   if (status === "unauthenticated") {
     Router.push("/");
@@ -69,11 +77,6 @@ const WritePage = () => {
       .replace(/^-+|-+$/g, "");
 
   const handleSubmit = async () => {
-  if (!title) {
-    window.alert("Please enter a title.");
-    return;
-  }
-// NEW
     const res = await fetch("/api/posts", {
       method: "POST",
       body: JSON.stringify({
@@ -81,7 +84,7 @@ const WritePage = () => {
         desc: value,
         img: imageLink,
         slug: slugify(title),
-        catSlug: catSlug || "style",
+        catSlug: catSlug || "style", //If not selected, choose the general category
       }),
     });
 
@@ -90,14 +93,12 @@ const WritePage = () => {
       Router.push(`/posts/${data.slug}`);
     }
   };
-
   return (
     <div className="min-h-[500px] mt-[30px] write overflow-hidden">
       <div className="flex flex-col items-start gap-4">
         <input
           type="text"
           placeholder="Title"
-          value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
         <p className="text-[22px] mt-[10px]">Select One Category :</p>
