@@ -97,6 +97,7 @@ const WritePage = () => {
         <input
           type="text"
           placeholder="Title"
+          value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
         <p className="text-[22px] mt-[10px]">Select One Category :</p>
