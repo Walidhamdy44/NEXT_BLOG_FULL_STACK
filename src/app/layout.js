@@ -5,6 +5,7 @@ import Footer from "@/components/Layout/Footer";
 import ThemeProvider from "@/providers/ThemeProvider";
 import { ThemeContextProvider } from "@/context/ThemeContext";
 import AuthProvider from "@/providers/AuthProvider";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default function RootLayout({ children }) {
                 <div className="wrapper">
                   <NavBar />
                   {children}
+                  <SpeedInsights />
                   <Footer />
                 </div>
               </div>

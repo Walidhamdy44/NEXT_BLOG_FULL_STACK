@@ -11,6 +11,7 @@
   "dependencies": {
     "@auth/prisma-adapter": "^2.0.0",
     "@prisma/client": "^5.12.1",
+    "@vercel/speed-insights": "^1.0.10",
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
     "firebase": "^10.11.0",
