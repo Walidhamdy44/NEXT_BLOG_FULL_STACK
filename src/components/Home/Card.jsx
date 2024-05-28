@@ -22,7 +22,7 @@ const Card = ({ img, title, type, desc, date, slug }) => {
             {title}
           </p>
           <div
-            className="text-gray-500"
+            className="text-gray-500 custom-scroll"
             style={{
               fontSize: "15px",
               maxHeight: "170px", // Adjust this height as necessary
