@@ -23,8 +23,12 @@ const Card = ({ img, title, type, desc, date, slug }) => {
           </p>
           <div
             className="text-gray-500"
-            style={{ fontSize: "15px" }}
-            dangerouslySetInnerHTML={{ __html: desc.substring(0, 300) }}
+            style={{
+              fontSize: "15px",
+              maxHeight: "170px", // Adjust this height as necessary
+              overflowY: "auto",
+            }}
+            dangerouslySetInnerHTML={{ __html: desc }}
           />
           <Link href={`/posts/${slug}`} className="btn-primary">
             Read More!
